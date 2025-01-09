@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nghe Nhạc Online</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: url("/2.jpg") no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+        padding: 20px;
+      }
+      h1 {
+        color: #ffdd57;
+      }
+      .music-list {
+        margin: 20px auto;
+        max-width: 500px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+      }
+      .song {
+        margin: 20px 0;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        text-align: left;
+        color: #333;
+      }
+      .song img {
+        max-width: 100px;
+        border-radius: 10px;
+        margin-right: 10px;
+        float: left;
+      }
+      .song p {
+        margin: 0;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      .clear {
+        clear: both;
+      }
+      .upload-section {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Phù Thủy Tình Yêu Online</h1>
+    <div class="music-list" id="musicList">
+      <div class="song">
+        <img src="logo1.jpg" alt="Logo bài hát 1" />
+        <p><strong>Bài hát 1:</strong> Tình yêu màu nắng</p>
+        <audio id="audio1" src="./mp3/Tình yêu màu lắng.mp3"></audio>
+        <button onclick="playPause('audio1')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo2.jpg" alt="Logo bài hát 2" />
+        <p><strong>Bài hát 2:</strong> nhạc cho thầy tu</p>
+        <audio id="audio2" src="./mp3/Nhạc cho thầy tu.mp3"></audio>
+        <button onclick="playPause('audio2')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo3.jpg" alt="Logo bài hát 3" />
+        <p><strong>Bài hát 3:</strong> nhạc cho người điếc</p>
+        <audio id="audio3" src="./mp3/BLACK-02.mp3"></audio>
+        <button onclick="playPause('audio3')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo4.jpg" alt="Logo bài hát 3" />
+        <p><strong>Bài hát 3:</strong> bối rối con tim</p>
+        <audio id="audio4" src="./mp3/BLACK-04.mp3"></audio>
+        <button onclick="playPause('audio4')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo5.jpg" alt="Logo bài hát 3" />
+        <p><strong>Bài hát 3:</strong> nhạc cho người què</p>
+        <audio id="audio5" src="./mp3/BLACK-03.mp3"></audio>
+        <button onclick="playPause('audio5')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo6.jpg" alt="Logo bài hát 3" />
+        <p><strong>Bài hát 3:</strong> chúc ông chủ may mắn nhé</p>
+        <audio id="audio6" src="./mp3/BLACK-01.mp3"></audio>
+        <button onclick="playPause('audio6')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+      <div class="song">
+        <img src="logo7.jpg" alt="Logo bài hát 3" />
+        <p><strong>Bài hát 3:</strong> nhạc này hay nè</p>
+        <audio id="audio7" src="./mp3/1T68COKpFOHc.128.mp3"></audio>
+        <button onclick="playPause('audio7')">Phát / Dừng</button>
+        <div class="clear"></div>
+      </div>
+    </div>
+
+    <!-- Phần tải nhạc lên -->
+    <div class="upload-section">
+      <h2>Tải lên bài hát của bạn</h2>
+      <input type="file" id="fileInput" accept="audio/*" />
+      <input type="file" id="logoInput" accept="image/*" />
+      <button onclick="uploadMusic()">Tải lên</button>
+    </div>
+
+    <script>
+      function playPause(audioId) {
+        const audio = document.getElementById(audioId);
+        if (audio.paused) {
+          audio.play();
+        } else {
+          audio.pause();
+        }
+      }
+
+      function uploadMusic() {
+        const fileInput = document.getElementById("fileInput");
+        const logoInput = document.getElementById("logoInput");
+        const musicList = document.getElementById("musicList");
+
+        const file = fileInput.files[0];
+        const logoFile = logoInput.files[0];
+
+        if (file) {
+          const audioUrl = URL.createObjectURL(file);
+
+          // Tạo logo mặc định hoặc sử dụng logo người dùng tải lên
+          let logoUrl = "logo1.jpg"; // Logo mặc định
+          if (logoFile) {
+            logoUrl = URL.createObjectURL(logoFile);
+          }
+
+          // Tạo phần tử bài hát mới
+          const songDiv = document.createElement("div");
+          songDiv.classList.add("song");
+
+          const songImg = document.createElement("img");
+          songImg.src = logoUrl; // Sử dụng logo người dùng tải lên hoặc logo mặc định
+          songDiv.appendChild(songImg);
+
+          const songInfo = document.createElement("p");
+          songInfo.innerHTML = `<strong>Bài hát mới:</strong> ${file.name}`;
+          songDiv.appendChild(songInfo);
+
+          const audioElement = document.createElement("audio");
+          audioElement.src = audioUrl;
+          audioElement.controls = true;
+          songDiv.appendChild(audioElement);
+
+          // Thêm bài hát vào danh sách hiện có
+          musicList.appendChild(songDiv);
+        } else {
+          alert("Vui lòng chọn một tệp nhạc để tải lên.");
+        }
+      }
+    </script>
+  </body>
+</html>
